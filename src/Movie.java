@@ -1,5 +1,5 @@
-class Movie implements Comparable
-{ private int year;
+class Movie implements Comparable {
+    private int year;
     private String title;
 
     public Movie(String t, int y)
@@ -12,7 +12,7 @@ class Movie implements Comparable
 
     @Override
     public String toString() {
-        return title+" "+year;
+        return year+" "+title;
     }
 
 
