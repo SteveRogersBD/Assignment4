@@ -3,10 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Represents a simple movie theater GUI application.
- */
-public class MovieTheater implements ActionListener {
+public class GuiProgram implements ActionListener {
 
     private JButton nowPlayingB;
     private JButton mediaB;
@@ -16,14 +13,10 @@ public class MovieTheater implements ActionListener {
     private JButton oneB;
     private JButton twoB;
     private JButton threeB;
-    private JButton fourB;
+    private JButton zeroB;
     private JButton ok;
 
-    /**
-     * @author Aniruddha Biswas Atanu
-     * Constructs the movie theater GUI.
-     */
-    public MovieTheater() {
+    public GuiProgram() {
         // Initialize buttons and set their action listeners
         nowPlayingB = new JButton("Now Playing");
         nowPlayingB.addActionListener(this);
@@ -34,30 +27,31 @@ public class MovieTheater implements ActionListener {
         helpB = new JButton("Help & Info");
         helpB.addActionListener(this);
 
+        // Set background color to white
+        nowPlayingB.setBackground(Color.WHITE);
+        mediaB.setBackground(Color.WHITE);
+        libraryB.setBackground(Color.WHITE);
+        helpB.setBackground(Color.WHITE);
+
         // Create panel for buttons on the left side
         JPanel westPan = new JPanel();
+        westPan.setLayout(new FlowLayout());
         westPan.add(nowPlayingB);
         westPan.add(mediaB);
         westPan.add(libraryB);
         westPan.add(helpB);
-        westPan.setLayout(new GridLayout(4, 0));
 
         // Create JTextArea for displaying text
-        center = new JTextArea();
+        center = new JTextArea(5, 20);
         JScrollPane centerScroll = new JScrollPane(center);
 
         // Create panel for labels on the bottom
         JPanel southPan = new JPanel();
         JLabel movie = new JLabel("Movie");
-        movie.setSize(50, 20);
         JLabel music = new JLabel("Music");
-        music.setSize(50, 20);
         JLabel video = new JLabel("Video");
-        video.setSize(50, 20);
         JLabel dvd = new JLabel("DVD");
-        dvd.setSize(50, 20);
         JLabel webPages = new JLabel("Web Pages");
-        webPages.setSize(50, 20);
         southPan.setLayout(new FlowLayout());
         southPan.add(movie);
         southPan.add(music);
@@ -66,35 +60,66 @@ public class MovieTheater implements ActionListener {
         southPan.add(webPages);
 
         // Create panel for buttons on the right side
-        JPanel eastPan = new JPanel();
-        eastPan.setLayout(new GridLayout(3, 1));
+        JPanel eastPan = new JPanel(new BorderLayout());
+
+        // Create panels for each row of buttons
+        JPanel row1 = new JPanel();
+        row1.setLayout(new FlowLayout());
+        JPanel row2 = new JPanel();
+        row2.setLayout(new FlowLayout());
+
+        // Create buttons
         oneB = new JButton("1");
         oneB.addActionListener(this);
         twoB = new JButton("2");
         twoB.addActionListener(this);
         threeB = new JButton("3");
         threeB.addActionListener(this);
-        fourB = new JButton("4");
-        fourB.addActionListener(this);
+        zeroB = new JButton("0");
+        zeroB.addActionListener(this);
         ok = new JButton("ok");
         ok.addActionListener(this);
-        JPanel row1 = new JPanel();
-        JPanel row2 = new JPanel();
-        JPanel row3 = new JPanel();
+
+        // Set background color to white and set sizes
+        zeroB.setBackground(Color.WHITE);
+        zeroB.setPreferredSize(new Dimension(65,20));
+
+        oneB.setBackground(Color.WHITE);
+        oneB.setPreferredSize(new Dimension(65,20));
+
+        twoB.setBackground(Color.WHITE);
+        twoB.setPreferredSize(new Dimension(65,20));
+
+        threeB.setBackground(Color.WHITE);
+        threeB.setPreferredSize(new Dimension(65,20));
+
+        ok.setBackground(Color.WHITE);
+
+        // Add buttons to rows
+        row1.add(zeroB);
         row1.add(oneB);
-        row1.add(twoB);
+        row1.setPreferredSize(new Dimension(150,30));
+
+        row2.add(twoB);
         row2.add(threeB);
-        row2.add(fourB);
-        row3.add(ok);
-        eastPan.add(row1);
-        eastPan.add(row2);
-        eastPan.add(row3);
+        row2.setPreferredSize(new Dimension(150,30));
+
+        ok.setPreferredSize(new Dimension(150,470));
+
+        // Add rows to the main panel
+        eastPan.add(row1, BorderLayout.NORTH);
+        eastPan.add(row2, BorderLayout.CENTER);
+        eastPan.add(ok, BorderLayout.SOUTH);
+
+        westPan.setPreferredSize(new Dimension(107,600));
+        eastPan.setPreferredSize(new Dimension(150,600));
+        //center.setPreferredSize(new Dimension(100,400));
 
         // Create main frame
         JFrame frame = new JFrame("Movies on Thursday");
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 400);
+        frame.setSize(new Dimension(450, 600));
         frame.add(westPan, BorderLayout.WEST);
         frame.add(centerScroll, BorderLayout.CENTER);
         frame.add(southPan, BorderLayout.SOUTH);
@@ -102,11 +127,6 @@ public class MovieTheater implements ActionListener {
         frame.setVisible(true);
     }
 
-    /**
-     * Handles button click events.
-     *
-     * @param e The ActionEvent object representing the button click event.
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
         // Get the current text of the JTextArea
@@ -115,13 +135,6 @@ public class MovieTheater implements ActionListener {
         handlePress((JButton) e.getSource(), currentText, center);
     }
 
-    /**
-     * Appends button text to the JTextArea.
-     *
-     * @param button The button that was pressed.
-     * @param curr   The current text in the JTextArea.
-     * @param center The JTextArea component.
-     */
     public static void handlePress(JButton button, String curr, JTextArea center) {
         // Append button text followed by a newline character
         curr += button.getText() + "\n";
@@ -129,12 +142,7 @@ public class MovieTheater implements ActionListener {
         center.setText(curr);
     }
 
-    /**
-     * Main method to create and run the movie theater GUI.
-     *
-     * @param args The command-line arguments (not used).
-     */
     public static void main(String[] args) {
-        MovieTheater theater = new MovieTheater();
+        GuiProgram theater = new GuiProgram();
     }
 }

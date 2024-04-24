@@ -7,7 +7,7 @@ import java.util.*;
  * @author Aniruddha Biswas Atanu
  * A program to read movie data from files and find common movies between two sets.
  */
-public class MovieClassReader {
+public class SetOperation {
 
     /**
      * Reads movie data from files, finds common movies between two sets, and prints them.
